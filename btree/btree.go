@@ -32,6 +32,8 @@ type TreeNode struct {
 	key   string
 	value NodeValue
 
+	parent *TreeNode
+
 	children []TreeNode
 }
 
@@ -92,6 +94,16 @@ func (t *BTree) Get(key string) *TreeNode{
 
 func (t *BTree) GetRoot() *TreeNode {
 	return t.root
+}
+
+func (t *BTree) releaseNode(node *TreeNode) {
+	p := node.parent
+	for idx, child := range p.children {
+		if &child == node {
+			removeNode(node, idx)
+			break
+		}
+	}
 }
 
 func NewBTree() (*BTree){
@@ -178,5 +190,23 @@ func insertNode(parent *TreeNode, position int, val *TreeNode) {
 	index = append(index, last...)
 
 	parent.children = index
+}
+
+func removeNode(parent *TreeNode, position int) {
+	index := parent.children
+	if len(index) <= position {
+		return
+	}
+
+	index = append([]TreeNode{}, index[0: position-1]...)
+	index = append(index, index[position:]...)
+	parent.children = index
+}
+
+func bisectionCutting(array []TreeNode) (left []TreeNode, right []TreeNode) {
+	mid := len(array) / 2
+	left = append([]TreeNode{}, array[0: mid]...)
+	right = append([]TreeNode{}, array[mid: len(array) -1]...)
+	return
 }
 

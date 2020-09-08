@@ -7,6 +7,7 @@ import (
 )
 
 func TestIndexInsert(t *testing.T) {
+
 	var array []string
 
 	for i:=0;i < 18 ; i ++  {
