@@ -106,13 +106,13 @@ func (t *BTree) releaseNode(node *TreeNode) {
 	}
 }
 
-func NewBTree() (*BTree){
+func NewBTree() *BTree {
 	return &BTree{
 		root: NewTreeNode("root", "root", 0),
 	}
 }
 
-func NewTreeNode(key string, data string, transactionID int) (*TreeNode) {
+func NewTreeNode(key string, data string, transactionID int) *TreeNode {
 	return &TreeNode{
 		size: 0,
 		nodeType: LEAF,
